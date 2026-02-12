@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Slime : BaseMonster
+public class Orc : BaseMonster
 {
     private void Awake()
     {
@@ -23,10 +23,5 @@ public class Slime : BaseMonster
         {
             return !CheckPlayer();
         });
-    }
-
-    private void Update()
-    {
-        stateMachine.Update();
     }
 }

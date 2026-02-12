@@ -66,6 +66,13 @@ public class StateMachine
         stateDic[entryState].Enter();
     }
 
+    /// <summary>
+    /// Update를 실행.
+    /// 1. 현재 상태(State)의 Update
+    /// 2. 전이 조건을 검사하여 상태 전이를 실행
+    /// 2-1. 어떤 상태든지 전이할 상태 조건을 검사
+    /// 2-2. 특정 상태 전이(Idle -> Trace, Trace -> Attack..)를 검사
+    /// </summary>
     public void Update()
     {
         stateDic[CurState].Update();
