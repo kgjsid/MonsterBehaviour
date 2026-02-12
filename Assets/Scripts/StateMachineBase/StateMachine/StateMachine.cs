@@ -1,0 +1,108 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System;
+using UnityEngine.XR;
+
+/// <summary>
+/// 상태 패턴을 활용한 유한 상태 머신
+/// </summary>
+public class StateMachine
+{
+    private Dictionary<eState, BaseState> stateDic;
+    private List<Transition> anyStateTransition;
+
+    public eState CurState { get; private set; }
+
+    /// <summary>
+    /// 생성자.
+    /// 몬스터의 행동은 딕셔너리(enum, baseState)로 관리
+    /// 전이(Transition) 구조체 리스트를 관리
+    /// </summary>
+    public StateMachine()
+    {
+        stateDic = new Dictionary<eState, BaseState>();
+        anyStateTransition = new List<Transition>();
+    }
+
+    /// <summary>
+    /// 행동머신에 상태 추가
+    /// 중복된 상태는 허용하지 않음
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="state"></param>
+    public void AddState(eState key, BaseState value)
+    {
+        Debug.Assert(stateDic.TryAdd(key, value));
+    }
+
+    /// <summary>
+    /// 전이 조건을 추가
+    /// </summary>
+    /// <param name="start">현재 전이 상태</param>
+    /// <param name="end">전이 목표 상태</param>
+    /// <param name="condition">조건(리턴값이 bool인 메소드)</param>
+    public void AddStateTransition(eState start, eState end, Func<bool> condition)
+    {
+        stateDic[start].Transitions.Add(new Transition(end, condition));
+    }
+
+    /// <summary>
+    /// 어떤 상태에서든 바로 전이될 수 있는 조건을 추가
+    /// </summary>
+    /// <param name="state"></param>
+    /// <param name="condition"></param>
+    public void AddAnyStateTransition(eState state, Func<bool> condition)
+    {
+        anyStateTransition.Add(new Transition(state, condition));
+    }
+    
+    /// <summary>
+    /// 상태 머신 초기화
+    /// </summary>
+    /// <param name="entryState">시작될 상태</param>
+    public void Init(eState entryState)
+    {
+        CurState = entryState;
+        stateDic[entryState].Enter();
+    }
+
+    public void Update()
+    {
+        stateDic[CurState].Update();
+
+        foreach(var transition in anyStateTransition)
+        {
+            if(transition.condition())
+            {
+                ChangeState(transition.transitionState);
+                return;
+            }
+        }
+
+        foreach(var transition in stateDic[CurState].Transitions)
+        {
+            if(transition.condition())
+            {
+                ChangeState(transition.transitionState);
+                return;
+            }
+        }
+    }
+
+    public void LateUpdate()
+    {
+        stateDic[CurState].LateUpdate();
+    }
+
+    public void FixedUpdate()
+    {
+        stateDic[CurState].FixedUpdate();
+    }
+
+    private void ChangeState(eState nextState)
+    {
+        stateDic[CurState].Exit();
+        CurState = nextState;
+        stateDic[CurState].Enter();
+    }
+}
