@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// BaseMonster Å¬·¡½º. 
@@ -81,26 +82,34 @@ public class BaseMonster : StateEntity
     protected void OnDrawGizmosSelected()
     {
         if (monsterTransform == null) return;
-        
+
         Vector3 pos = monsterTransform.position;
         float range = MonsterStatData.detectionRange;
         float angle = MonsterStatData.detectionAngle;
 
+        DrawCircleGizmos(pos, range);
+        DrawAngleGizmos(pos, angle, range);
+    }
+
+    private void DrawCircleGizmos(Vector3 monsterPos, float range)
+    {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(pos, range);
+        Gizmos.DrawWireSphere(monsterPos, range);
+    }
 
+    private void DrawAngleGizmos(Vector3 monsterPos, float angle, float range)
+    {
         Gizmos.color = Color.red;
-
         Vector3 leftDir = AngleToVector(-angle * 0.5f);
         Vector3 rightDir = AngleToVector(angle * 0.5f);
 
-        Gizmos.DrawLine(pos, pos + leftDir * range);
-        Gizmos.DrawLine(pos, pos + rightDir * range);
+        Gizmos.DrawLine(monsterPos, monsterPos + leftDir * range);
+        Gizmos.DrawLine(monsterPos, monsterPos + rightDir * range);
 
         if (targetTransform != null && DetechTarget())
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(pos, targetTransform.position);
+            Gizmos.DrawLine(monsterPos, targetTransform.position);
         }
     }
 
