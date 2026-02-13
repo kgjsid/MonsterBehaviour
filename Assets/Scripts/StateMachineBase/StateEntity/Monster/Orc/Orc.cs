@@ -17,11 +17,11 @@ public class Orc : BaseMonster
 
         stateMachine.AddStateTransition(eState.Idle, eState.Trace, () =>
         {
-            return CheckPlayer();
+            return DetechTarget();
         });
         stateMachine.AddStateTransition(eState.Trace, eState.Idle, () =>
         {
-            return !CheckPlayer();
+            return !DetechTarget();
         });
     }
 }

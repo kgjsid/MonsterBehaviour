@@ -5,8 +5,15 @@ public class Slime : BaseMonster
     private void Awake()
     {
         InitStateMachine();
-
+        InitMonsterSetting();
         AddState();
+    }
+
+    protected override void InitMonsterSetting()
+    {
+        base.InitMonsterSetting();
+
+        MonsterStatData = new MonsterStatData("Slime", 100, 10, 3f, 60f, 1f, 10);
     }
 
     protected override void AddState()
@@ -17,11 +24,11 @@ public class Slime : BaseMonster
 
         stateMachine.AddStateTransition(eState.Idle, eState.Trace, () =>
         {
-            return CheckPlayer();
+            return DetechTarget();
         });
         stateMachine.AddStateTransition(eState.Trace, eState.Idle, () =>
         {
-            return !CheckPlayer();
+            return !DetechTarget();
         });
     }
 
