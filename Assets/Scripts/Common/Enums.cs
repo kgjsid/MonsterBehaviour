@@ -5,5 +5,12 @@ public enum eState
     Attack,
     Hit,
     Die,
-    End,
+    End
+}
+
+public enum eMonsterID
+{
+    Slime,
+    Orc,
+    End
 }

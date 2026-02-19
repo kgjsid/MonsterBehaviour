@@ -13,7 +13,7 @@ public class Slime : BaseMonster
     {
         base.InitMonsterSetting();
 
-        MonsterStatData = new MonsterStatData("Slime", 100, 10, 3f, 60f, 1f, 10);
+        MonsterStatData = new MonsterStatData("Slime", 100, 10, 3f, 85f, 1f, 10);
     }
 
     protected override void AddState()
