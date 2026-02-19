@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEngine.XR;
 
 /// <summary>
 /// 상태 패턴을 활용한 유한 상태 머신

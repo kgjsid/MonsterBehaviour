@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// BaseMonster Å¬·¡½º. 
