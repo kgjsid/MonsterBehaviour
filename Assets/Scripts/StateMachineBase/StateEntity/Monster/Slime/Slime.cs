@@ -2,18 +2,11 @@ using UnityEngine;
 
 public class Slime : BaseMonster
 {
-    private void Awake()
+    public override void InitMonsterSetting(MonsterStatData monsterStatData)
     {
         InitStateMachine();
-        InitMonsterSetting();
         AddState();
-    }
-
-    protected override void InitMonsterSetting()
-    {
-        base.InitMonsterSetting();
-
-        MonsterStatData = new MonsterStatData("Slime", 100, 10, 3f, 85f, 1f, 10);
+        base.InitMonsterSetting(monsterStatData);
     }
 
     protected override void AddState()
@@ -33,7 +26,7 @@ public class Slime : BaseMonster
     }
 
     private void Update()
-    {
-        stateMachine.Update();
+    {   
+        // stateMachine.Update();
     }
 }

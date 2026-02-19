@@ -24,25 +24,21 @@ public class BaseMonster : StateEntity
         }
     }
 
-    private void Awake()
+    public virtual void InitMonsterSetting(MonsterStatData monsterStatData)
     {
-        InitStateMachine();
-    }
-
-    private void Start()
-    {
-        CacheTarget();
-    }
-
-    protected virtual void InitMonsterSetting()
-    {
+        this.monsterStatData = monsterStatData;
         monsterTransform = transform;
         detectionCosValue = Mathf.Cos(Mathf.Deg2Rad * MonsterStatData.detectionAngle);
     }
 
-    protected void CacheTarget()
+    public void CacheTarget(Transform targetTransform)
     {
-        // targetObject Ä³½Ì
+        this.targetTransform = targetTransform;
+    }
+
+    public void StartStateMachine(eState enterState = eState.Idle)
+    {
+        stateMachine.Init(enterState);
     }
 
     protected virtual bool DetechTarget()

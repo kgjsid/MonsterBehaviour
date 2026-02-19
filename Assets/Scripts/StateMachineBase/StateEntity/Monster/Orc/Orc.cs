@@ -2,18 +2,11 @@ using UnityEngine;
 
 public class Orc : BaseMonster
 {
-    private void Awake()
+    public override void InitMonsterSetting(MonsterStatData monsterStatData)
     {
         InitStateMachine();
-        InitMonsterSetting();
+        base.InitMonsterSetting(monsterStatData);
         AddState();
-    }
-
-    protected override void InitMonsterSetting()
-    {
-        base.InitMonsterSetting();
-
-        MonsterStatData = new MonsterStatData("Orc", 200, 20, 5f, 30f, 1f, 5);
     }
 
     protected override void AddState()
@@ -34,6 +27,6 @@ public class Orc : BaseMonster
 
     private void Update()
     {
-        stateMachine.Update();
+        // stateMachine.Update();
     }
 }

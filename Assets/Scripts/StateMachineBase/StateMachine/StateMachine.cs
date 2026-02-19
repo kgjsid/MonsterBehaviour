@@ -31,7 +31,7 @@ public class StateMachine
     /// <param name="state"></param>
     public void AddState(eState key, BaseState value)
     {
-        Debug.Assert(stateDic.TryAdd(key, value));
+        stateDic.TryAdd(key, value);
     }
 
     /// <summary>

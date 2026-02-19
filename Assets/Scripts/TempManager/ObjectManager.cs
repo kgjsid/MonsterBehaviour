@@ -41,8 +41,10 @@ public class ObjectManager : MonoBehaviour
 
             BaseMonster newMonster = Instantiate(slimePrefab, Vector2.zero, Quaternion.identity);
 
-            newMonster.MonsterStatData = structDataManager.GetMonsterStatData((eMonsterID)randID);
-            
+            newMonster.InitMonsterSetting(structDataManager.GetMonsterStatData((eMonsterID)randID));
+            newMonster.CacheTarget(playerTransform);
+            newMonster.StartStateMachine(eState.Idle);
+
             monsterPool.Enqueue(newMonster);
         }
     }
