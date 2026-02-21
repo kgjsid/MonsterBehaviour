@@ -36,11 +36,6 @@ public class BaseMonster : StateEntity
         this.targetTransform = targetTransform;
     }
 
-    public void StartStateMachine(eState enterState = eState.Idle)
-    {
-        stateMachine.Init(enterState);
-    }
-
     protected virtual bool DetechTarget()
     {
         return CheckDistance() && CheckDirection();

@@ -24,9 +24,4 @@ public class Orc : BaseMonster
             return !DetechTarget();
         });
     }
-
-    private void Update()
-    {
-        // stateMachine.Update();
-    }
 }

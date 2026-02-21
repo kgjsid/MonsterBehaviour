@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Slime : BaseMonster
 {
+
     public override void InitMonsterSetting(MonsterStatData monsterStatData)
     {
         InitStateMachine();
@@ -23,10 +24,5 @@ public class Slime : BaseMonster
         {
             return !DetechTarget();
         });
-    }
-
-    private void Update()
-    {   
-        // stateMachine.Update();
     }
 }

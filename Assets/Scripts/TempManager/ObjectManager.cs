@@ -29,8 +29,8 @@ public class ObjectManager : MonoBehaviour
         playerController = newPlayer.GetComponent<PlayerController>();
         playerTransform = newPlayer.transform;
     }
-    
-    public void CreateMonster(StructDataManager structDataManager, int monsterCount = 10)
+
+    public void CreateMonster(StructDataManager structDataManager, int monsterCount = 1)
     {
         if (monsterPool == null)
             monsterPool = new Queue<BaseMonster>(MONSTER_CAPACITY);

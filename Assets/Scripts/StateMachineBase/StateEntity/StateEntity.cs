@@ -12,6 +12,16 @@ public class StateEntity : MonoBehaviour
         InitStateMachine();
     }
 
+    private void Update()
+    {
+        UpdateStateMachine();
+    }
+
+    public void StartStateMachine(eState enterState = eState.Idle)
+    {
+        stateMachine.Init(enterState);
+    }
+
     protected virtual void InitStateMachine()
     {
         stateMachine = new StateMachine();
@@ -20,5 +30,10 @@ public class StateEntity : MonoBehaviour
     protected virtual void AddState()
     {
 
+    }
+
+    protected virtual void UpdateStateMachine()
+    {
+        stateMachine.Update();
     }
 }
