@@ -18,6 +18,8 @@ public class BaseState
         }
     }
 
+    public StateEntity Owner { get { return owner; } }
+
     public BaseState(StateEntity owner)
     {
         transitions = new List<Transition>();

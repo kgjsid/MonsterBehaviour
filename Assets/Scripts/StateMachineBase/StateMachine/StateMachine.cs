@@ -12,6 +12,10 @@ public class StateMachine
 
     public eState CurState { get; private set; }
 
+    private const string ENTER = "Enter";
+    private const string EXIT = "Exit";
+    private const string UPDATE = "Update";
+
     /// <summary>
     /// 생성자.
     /// 몬스터의 행동은 딕셔너리(enum, baseState)로 관리
@@ -63,6 +67,7 @@ public class StateMachine
     {
         CurState = entryState;
         stateDic[entryState].Enter();
+        StateDebug(stateDic[entryState].Owner.name, ENTER, entryState);
     }
 
     /// <summary>
@@ -75,8 +80,9 @@ public class StateMachine
     public void Update()
     {
         stateDic[CurState].Update();
+        StateDebug(stateDic[CurState].Owner.name, UPDATE, CurState);
 
-        foreach(var transition in anyStateTransition)
+        foreach (var transition in anyStateTransition)
         {
             if(transition.condition())
             {
@@ -108,7 +114,14 @@ public class StateMachine
     private void ChangeState(eState nextState)
     {
         stateDic[CurState].Exit();
+        StateDebug(stateDic[CurState].Owner.name, EXIT, CurState);
         CurState = nextState;
         stateDic[CurState].Enter();
+        StateDebug(stateDic[CurState].Owner.name, ENTER, CurState);
+    }
+
+    private void StateDebug(string name, string transition, eState state)
+    {
+        Debug.Log($"({name}) {transition} {state} state");
     }
 }

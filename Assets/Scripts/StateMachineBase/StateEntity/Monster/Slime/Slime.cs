@@ -5,9 +5,8 @@ public class Slime : BaseMonster
 
     public override void InitMonsterSetting(MonsterStatData monsterStatData)
     {
-        InitStateMachine();
-        AddState();
         base.InitMonsterSetting(monsterStatData);
+        AddState();
     }
 
     protected override void AddState()

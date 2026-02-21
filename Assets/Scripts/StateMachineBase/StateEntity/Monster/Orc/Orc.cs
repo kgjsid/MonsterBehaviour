@@ -4,7 +4,6 @@ public class Orc : BaseMonster
 {
     public override void InitMonsterSetting(MonsterStatData monsterStatData)
     {
-        InitStateMachine();
         base.InitMonsterSetting(monsterStatData);
         AddState();
     }

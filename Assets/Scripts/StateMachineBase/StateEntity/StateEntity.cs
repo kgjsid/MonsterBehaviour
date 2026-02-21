@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +16,16 @@ public class StateEntity : MonoBehaviour
     private void Update()
     {
         UpdateStateMachine();
+    }
+
+    private void LateUpdate()
+    {
+        LateUpdateStateMachine();
+    }
+
+    private void FixedUpdate()
+    {
+        FixedUpdateStateMachine();
     }
 
     public void StartStateMachine(eState enterState = eState.Idle)
@@ -35,5 +46,15 @@ public class StateEntity : MonoBehaviour
     protected virtual void UpdateStateMachine()
     {
         stateMachine.Update();
+    }
+
+    protected virtual void LateUpdateStateMachine()
+    {
+        stateMachine.LateUpdate();
+    }
+
+    protected virtual void FixedUpdateStateMachine()
+    {
+        stateMachine.FixedUpdate();
     }
 }

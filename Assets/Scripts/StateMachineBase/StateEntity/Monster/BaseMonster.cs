@@ -26,6 +26,7 @@ public class BaseMonster : StateEntity
 
     public virtual void InitMonsterSetting(MonsterStatData monsterStatData)
     {
+        InitStateMachine();
         this.monsterStatData = monsterStatData;
         monsterTransform = transform;
         detectionCosValue = Mathf.Cos(Mathf.Deg2Rad * MonsterStatData.detectionAngle);
