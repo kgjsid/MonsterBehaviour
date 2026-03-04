@@ -1,60 +1,62 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 
-/// <summary>
-/// 상태 머신을 가지고 있을 클래스의 최상위.
-/// </summary>
-public class StateEntity : MonoBehaviour
+namespace FSM
 {
-    protected StateMachine stateMachine;
-
-    private void Awake()
+    /// <summary>
+    /// 상태 머신을 가지고 있을 클래스의 최상위.
+    /// </summary>
+    public class StateEntity : MonoBehaviour
     {
-        InitStateMachine();
-    }
+        protected StateMachine stateMachine;
 
-    private void Update()
-    {
-        UpdateStateMachine();
-    }
+        private void Awake()
+        {
+            InitStateMachine();
+        }
 
-    private void LateUpdate()
-    {
-        LateUpdateStateMachine();
-    }
+        private void Update()
+        {
+            UpdateStateMachine();
+        }
 
-    private void FixedUpdate()
-    {
-        FixedUpdateStateMachine();
-    }
+        private void LateUpdate()
+        {
+            LateUpdateStateMachine();
+        }
 
-    public void StartStateMachine(eState enterState = eState.Idle)
-    {
-        stateMachine.Init(enterState);
-    }
+        private void FixedUpdate()
+        {
+            FixedUpdateStateMachine();
+        }
 
-    protected virtual void InitStateMachine()
-    {
-        stateMachine = new StateMachine();
-    }
+        public void StartStateMachine(eState enterState = eState.Idle)
+        {
+            stateMachine.Init(enterState);
+        }
 
-    protected virtual void AddState()
-    {
+        protected virtual void InitStateMachine()
+        {
+            stateMachine = new StateMachine();
+        }
 
-    }
+        protected virtual void AddState()
+        {
 
-    protected virtual void UpdateStateMachine()
-    {
-        stateMachine.Update();
-    }
+        }
 
-    protected virtual void LateUpdateStateMachine()
-    {
-        stateMachine.LateUpdate();
-    }
+        protected virtual void UpdateStateMachine()
+        {
+            stateMachine.Update();
+        }
 
-    protected virtual void FixedUpdateStateMachine()
-    {
-        stateMachine.FixedUpdate();
+        protected virtual void LateUpdateStateMachine()
+        {
+            stateMachine.LateUpdate();
+        }
+
+        protected virtual void FixedUpdateStateMachine()
+        {
+            stateMachine.FixedUpdate();
+        }
     }
 }

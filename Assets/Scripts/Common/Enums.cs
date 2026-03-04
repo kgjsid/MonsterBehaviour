@@ -21,3 +21,10 @@ public enum eMonsterID
     Orc,
     End
 }
+
+public enum eMonsterBase
+{
+    StateMachine,
+    BehaviourTree,
+    End
+}

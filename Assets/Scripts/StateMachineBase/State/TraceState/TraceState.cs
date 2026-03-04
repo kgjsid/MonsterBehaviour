@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class TraceState : BaseState
+namespace FSM
 {
-    public TraceState(StateEntity owner) : base(owner) { }
-
-    public override void Enter()
+    public class TraceState : BaseState
     {
+        public TraceState(StateEntity owner) : base(owner) { }
 
-    }
+        public override void Enter()
+        {
 
-    public override void Update()
-    {
+        }
 
-    }
+        public override void Update()
+        {
 
-    public override void Exit()
-    {
+        }
 
+        public override void Exit()
+        {
+
+        }
     }
 }

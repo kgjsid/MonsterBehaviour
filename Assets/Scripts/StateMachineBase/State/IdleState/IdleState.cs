@@ -1,17 +1,20 @@
-/// <summary>
-/// IdleState(대기 상태)
-/// </summary>
-public class IdleState : BaseState
+namespace FSM
 {
-    public IdleState(StateEntity owner) : base(owner) { }
-
-    public override void Enter()
+    /// <summary>
+    /// IdleState(대기 상태)
+    /// </summary>
+    public class IdleState : BaseState
     {
-        
-    }
+        public IdleState(StateEntity owner) : base(owner) { }
 
-    public override void Exit()
-    {
+        public override void Enter()
+        {
 
+        }
+
+        public override void Exit()
+        {
+
+        }
     }
 }

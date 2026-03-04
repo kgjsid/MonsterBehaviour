@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class Orc : BaseMonster
+namespace FSM
 {
-    public override void InitMonsterSetting(MonsterStatData monsterStatData)
+    public class Orc : BaseMonster
     {
-        base.InitMonsterSetting(monsterStatData);
-        AddState();
-    }
-
-    protected override void AddState()
-    {
-        stateMachine.AddState(eState.Idle, new IdleState(this));
-
-        stateMachine.AddState(eState.Trace, new TraceState(this));
-
-        stateMachine.AddStateTransition(eState.Idle, eState.Trace, () =>
+        public override void InitMonsterSetting(MonsterStatData monsterStatData)
         {
-            return DetechTarget();
-        });
-        stateMachine.AddStateTransition(eState.Trace, eState.Idle, () =>
+            base.InitMonsterSetting(monsterStatData);
+            AddState();
+        }
+
+        protected override void AddState()
         {
-            return !DetechTarget();
-        });
+            stateMachine.AddState(eState.Idle, new IdleState(this));
+
+            stateMachine.AddState(eState.Trace, new TraceState(this));
+
+            stateMachine.AddStateTransition(eState.Idle, eState.Trace, () =>
+            {
+                return DetechTarget();
+            });
+            stateMachine.AddStateTransition(eState.Trace, eState.Idle, () =>
+            {
+                return !DetechTarget();
+            });
+        }
     }
 }
