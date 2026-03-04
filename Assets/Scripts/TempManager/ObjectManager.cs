@@ -8,6 +8,7 @@ public class ObjectManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Slime slimePrefab;
+    [SerializeField] private SkeletonArcher archerPrefab;
 
     private Queue<FSM.BaseMonster> fsmMonsterPool = new Queue<FSM.BaseMonster>(MONSTER_CAPACITY);
     private Queue<BT.BaseMonster> btMonsterPool = new Queue<BT.BaseMonster>(MONSTER_CAPACITY);
@@ -40,7 +41,8 @@ public class ObjectManager : MonoBehaviour
         {
             int randID = Random.Range(0, (int)eMonsterID.End);
 
-            CreateMonsterByFsm(structDataManager.GetMonsterStatData((eMonsterID)randID));
+            // CreateMonsterByFsm(structDataManager.GetMonsterStatData((eMonsterID)randID));
+            CreateMonsterByBT(structDataManager.GetMonsterStatData((eMonsterID)randID));
         }
     }
 
@@ -48,14 +50,20 @@ public class ObjectManager : MonoBehaviour
     {
         FSM.BaseMonster newMonster = Instantiate(slimePrefab, Vector2.zero, Quaternion.identity);
 
+        newMonster.InitMonsterSetting(monsterStatData);
         newMonster.CacheTarget(playerTransform);
         newMonster.StartStateMachine(eState.Idle);
 
         fsmMonsterPool.Enqueue(newMonster);
     }
 
-    private void CreateMonsterByBT()
+    private void CreateMonsterByBT(MonsterStatData monsterStatData)
     {
+        BT.BaseMonster newMonster = Instantiate(archerPrefab, Vector2.zero, Quaternion.identity);
 
+        newMonster.InitMonsterSetting(monsterStatData);
+        newMonster.CacheTarget(playerTransform);
+
+        btMonsterPool.Enqueue(newMonster);
     }
 }

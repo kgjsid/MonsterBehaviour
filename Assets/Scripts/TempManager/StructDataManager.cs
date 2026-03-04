@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StructDataManager : MonoBehaviour
 {
-    [SerializeField] private MonsterStatData[] monsterStatDatas = new MonsterStatData[(int)eMonsterID.End];
+    private MonsterStatData[] monsterStatDatas = new MonsterStatData[(int)eMonsterID.End];
 
     private const string ID_ERROR_MESSAGE = "ID does not exist";
 

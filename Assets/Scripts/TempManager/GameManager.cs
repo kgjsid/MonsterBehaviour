@@ -68,5 +68,17 @@ public class GameManager : MonoBehaviour
         orcData.moveSpeed = 3;
 
         structDataManager.SetMonsterStatDatas(eMonsterID.Orc, orcData);
+
+        MonsterStatData skeletonArcherData = new MonsterStatData();
+
+        skeletonArcherData.name = "SkeletonArcher";
+        skeletonArcherData.hp = 50;
+        skeletonArcherData.damage = 3;
+        skeletonArcherData.detectionRange = 10f;
+        skeletonArcherData.detectionAngle = 60f;
+        skeletonArcherData.attackRange = 5f;
+        skeletonArcherData.moveSpeed = 2;
+
+        structDataManager.SetMonsterStatDatas(eMonsterID.SkeletonArcher, skeletonArcherData);
     }
 }

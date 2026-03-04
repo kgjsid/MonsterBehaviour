@@ -19,6 +19,7 @@ public enum eMonsterID
 {
     Slime,
     Orc,
+    SkeletonArcher,
     End
 }
 
