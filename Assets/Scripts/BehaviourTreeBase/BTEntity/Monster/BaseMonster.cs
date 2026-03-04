@@ -5,14 +5,27 @@ namespace BT
 {
     public class BaseMonster : BTEntity
     {
-        public MonsterStatData monsterStatData;
+        protected MonsterStatData monsterStatData;
+        protected Transform monsterTransform;
+        protected Transform targetTransform;
 
-        public void InitSetting()
+        protected float detectionCosValue;
+
+        public void InitMonsterSetting(MonsterStatData monsterStatData)
         {
-            rootNode = BuildTree();
+            this.monsterStatData = monsterStatData;
+            detectionCosValue = Mathf.Cos(Mathf.Deg2Rad * monsterStatData.detectionAngle);
+
+            BuildTree();
+            monsterTransform = transform;
         }
 
-        private Node BuildTree()
+        public void CacheTarget(Transform targetTransform)
+        {
+            this.targetTransform = targetTransform;
+        }
+
+        protected virtual void BuildTree()
         {
             Node attackNode = new Sequence("AttackNode", new List<Node>
             {
@@ -26,43 +39,73 @@ namespace BT
             new ActionNode("TraceActionNode", Trace)
             });
 
-            Node idleNode = new Sequence("IdleNode", new List<Node>
+            // 트리의 끝에 배치해서 어떤 조건도 걸리지 않으면 Idle로 행동 전환.
+            Node idleNode = new ActionNode("IdleNode", Idle);
+
+            // attack -> trace -> idle
+            rootNode = new Selector("MonsterRootSelector", new List<Node>
             {
-            new ConditionNode("IdleConditionNode", IsEnterIdleStatus),
-            new ActionNode("IdleActionNode", Idle)
+                attackNode,
+                traceNode,
+                idleNode
             });
-
-            return null;
         }
 
-        private bool IsInAttackRange()
+        protected bool IsInAttackRange()
         {
-            return false;
+            return CheckAttackDistance();
         }
 
-        private bool IsInDetectionRange()
+        protected bool IsInDetectionRange()
         {
-            return false;
+            return CheckDetectionDistance() && CheckDirection();
         }
 
-        private bool IsEnterIdleStatus()
+        protected eNodeStatus Attack()
         {
-            return true;
+            return eNodeStatus.Running;
         }
 
-        private eNodeStatus Attack()
+        protected eNodeStatus Trace()
         {
-            return eNodeStatus.Failure;
+            Vector2 moveDir = (targetTransform.position - monsterTransform.position).normalized;
+
+            monsterTransform.Translate(moveDir * Time.deltaTime * monsterStatData.moveSpeed);
+
+            return eNodeStatus.Running;
         }
 
-        private eNodeStatus Trace()
+        protected eNodeStatus Idle()
         {
-            return eNodeStatus.Failure;
+            return eNodeStatus.Running;
         }
 
-        private eNodeStatus Idle()
+        protected bool CheckAttackDistance()
         {
-            return eNodeStatus.Failure;
+            if (targetTransform == null) return false;
+
+            float dist = Vector2.SqrMagnitude(targetTransform.position - monsterTransform.position);
+            return dist < monsterStatData.attackRange * monsterStatData.attackRange;
+        }
+
+        protected bool CheckDetectionDistance()
+        {
+            if (targetTransform == null) return false;
+
+            float dist = Vector2.SqrMagnitude(targetTransform.position - monsterTransform.position);
+            return dist < monsterStatData.detectionRange * monsterStatData.detectionRange;
+        }
+
+        protected bool CheckDirection()
+        {
+            return GetDotProductToTarget() > detectionCosValue;
+        }
+
+        protected float GetDotProductToTarget()
+        {
+            Vector2 dirToTarget = (targetTransform.position - monsterTransform.position).normalized;
+
+            return Vector3.Dot(dirToTarget, monsterTransform.right);
         }
 
     }

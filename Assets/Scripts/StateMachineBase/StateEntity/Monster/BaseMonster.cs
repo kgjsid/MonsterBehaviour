@@ -29,8 +29,9 @@ namespace FSM
 
         public virtual void InitMonsterSetting(MonsterStatData monsterStatData)
         {
-            InitStateMachine();
             this.monsterStatData = monsterStatData;
+
+            InitStateMachine();
             monsterTransform = transform;
             detectionCosValue = Mathf.Cos(Mathf.Deg2Rad * MonsterStatData.detectionAngle);
         }
