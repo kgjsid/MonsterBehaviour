@@ -6,7 +6,13 @@ public abstract class Node
 {
     private string name;
 
-    public string Name { get; }
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
 
     protected Node(string name)
     {
